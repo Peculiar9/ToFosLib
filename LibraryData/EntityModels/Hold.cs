@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LibraryData.EntityModels
 {
-    public class Holds
+    public class Hold
     {
         public int Id { get; set; }
         public LibraryAsset LibraryAsset { get; set; }
