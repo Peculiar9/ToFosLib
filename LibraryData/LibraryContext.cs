@@ -22,5 +22,10 @@ namespace LibraryData
         public DbSet<Status> Statuses { get; set; }
         public DbSet<Checkout> Checkouts { get; set; }
         public DbSet<CheckoutHistory> CheckoutHistories { get; set; }
+
+        public object FirstOrDefault(Func<object, bool> p)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
