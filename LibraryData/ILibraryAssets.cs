@@ -1,20 +1,22 @@
 ﻿using LibraryData.EntityModels;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace LibraryData
 {
-    public interface ILibraryAssetsServices
+    public interface ILibraryAssets
     {
         IEnumerable<LibraryAsset> GetAll();
+
         LibraryAsset GetById(int id);
-        void LibraryAsset(LibraryAsset asset);
+        void Add(LibraryAsset newAsset);
 
         string GetDeweyIndex(int id);
         string GetIsbn(int id);
         string GetAuthorOrDirector(int id);
         string GetTitle(int id);
+
         string GetType(int id);
+
+        LibraryBranch Location(int Id);
     }    
 }
