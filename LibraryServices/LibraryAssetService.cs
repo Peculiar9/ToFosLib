@@ -64,5 +64,10 @@ namespace LibraryServices
         {
             throw new NotImplementedException();
         }
+
+        string ILibraryAssets.GetAuthorOrDirector(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
