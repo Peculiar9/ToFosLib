@@ -25,7 +25,7 @@ namespace ToFosLib.Controllers
                 Id = result.Id,
                 ImageUrl = result.ImageUrl, 
                 AuthorOrDirector = _assets.GetAuthorOrDirector(result.Id),
-                DeweyCallNumber = _assets.GetAuthorOrDirector(result.Id),
+                DeweyCallNumber = _assets.GetDeweyIndex(result.Id),
                 Type = _assets.GetType(result.Id),
                 Title = result.Title
             });
