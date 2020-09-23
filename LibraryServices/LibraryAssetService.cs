@@ -23,26 +23,33 @@ namespace LibraryServices
 
         public IEnumerable<LibraryAsset> GetAll()
         {
-            return _context.LibraryAssets.Include(assets => assets.Status)
-                  .Include(assets => assets.Location);
+            return _context.LibraryAssets;
         }
 
-        public LibraryAsset GetById(int id)
+        public LibraryAsset GetById(int id) 
         {
-            return
-           GetAll().FirstOrDefault(assets => assets.Id == id);
+            return _context.LibraryAssets.Include(assets => assets.Status).Include(assets => assets.Location)
+                  .FirstOrDefault(assets => assets.Id == id);
         }
-        public LibraryBranch Location(int Id)
+        public LibraryBranch GetCurrentLocation(int Id)
         { 
             return
             GetById(Id).Location;
         }
 
+
+        /// <summary>
+        /// This returns the dewey Index of an asset of type book if it matches the Id that is passed to this method
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public string GetDeweyIndex(int id)
         {
             if (_context.Books.Any(books => books.Id == id))
             {
-                return _context.Books.FirstOrDefault(books => books.Id == id).DeweyIndex;
+                return _context.Books
+                    .FirstOrDefault(books => books.Id == id)
+                    .DeweyIndex;
             }
 
             else
@@ -55,7 +62,8 @@ namespace LibraryServices
         {
             if (_context.Books.Any(a => a.Id == id))
             {
-                return _context.Books.FirstOrDefault(a => a.Id == id).ISBN;
+                return _context.Books
+                       .FirstOrDefault(a => a.Id == id).ISBN;
             }
 
             else
@@ -66,20 +74,29 @@ namespace LibraryServices
 
         public string GetTitle(int id)
         {
-            return _context.LibraryAssets.FirstOrDefault(a => a.Id == id).Title;
+            return _context.LibraryAssets
+                .FirstOrDefault(a => a.Id == id).Title;
         }
 
+        /// <summary>
+        /// Method gets type of asset whether it is a book or not
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public string GetType(int id)
         {
             var book = _context.Books.OfType<Book>().Where(b => b.Id == id);
             return book.Any() ? "Books" : "Videos";
         }
 
-
+        /// <summary>
+        /// Returns the Author of the asset of either video or book if the Id matches the id passed to the id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public string GetAuthorOrDirector(int id)
         {
         
-            
             var isBook = _context.LibraryAssets.OfType<Book>()
                  .Where(asset => asset.Id == id).Any();
             var isVideo = _context.LibraryAssets.OfType<Video>()
@@ -92,3 +109,4 @@ namespace LibraryServices
 
         }
     }
+    
