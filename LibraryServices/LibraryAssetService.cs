@@ -3,6 +3,7 @@ using LibraryData.EntityModels;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace LibraryServices
 {
@@ -24,15 +25,16 @@ namespace LibraryServices
         public IEnumerable<LibraryAsset> GetAll()
         {
             return _context.LibraryAssets;
+            //return await _context.LibraryAssets;
         }
 
-        public LibraryAsset GetById(int id) 
+        public LibraryAsset GetById(int id)
         {
             return _context.LibraryAssets.Include(assets => assets.Status).Include(assets => assets.Location)
                   .FirstOrDefault(assets => assets.Id == id);
         }
         public LibraryBranch GetCurrentLocation(int Id)
-        { 
+        {
             return
             GetById(Id).Location;
         }
@@ -96,7 +98,7 @@ namespace LibraryServices
         /// <returns></returns>
         public string GetAuthorOrDirector(int id)
         {
-        
+
             var isBook = _context.LibraryAssets.OfType<Book>()
                  .Where(asset => asset.Id == id).Any();
             var isVideo = _context.LibraryAssets.OfType<Video>()
@@ -107,6 +109,5 @@ namespace LibraryServices
                 _context.Videos.FirstOrDefault(videos => videos.Id == id).Director ?? "Unknown";
         }
 
-        }
     }
-    
+}
